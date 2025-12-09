@@ -41,6 +41,6 @@ int main() {
       else if constexpr (std::is_same_v<T, std::string>) 
         std::cout << "string: " << value << '\n';
       } , v1);
-
+//instead of using auto types, declare the variables in the types tthat the variable is going to be used fuckin moron
   return 0;
 }
