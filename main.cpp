@@ -1,15 +1,24 @@
+
 #include <chrono>
 #include <iostream>
 #include <string>
 #include <variant>
+#include <raylib.h>
+#include <raymath.h>
+#define WIDTH 640
+#define HEIGHT 480
 using val = std::variant<int, std::string>;
 void tests();
+
+
+
+void raylib();
 int main() {
 
   val v1 = 10;
   val v2 = "C++";
+raylib();
 
-  tests();
 
 
   // value se mueve
@@ -46,7 +55,42 @@ int main() {
   return 0;
 }
 
+void raylib() {
 
+
+//try on raylib jajaj;D
+  Vector2 p={300,225};
+  Vector2 v={100, 100};
+  float radius=20;
+  InitWindow(600, 450, "Try on raylib");
+  SetTargetFPS(165);
+  while (!WindowShouldClose())
+  {
+
+
+    std::string fps = std::to_string( GetFPS());
+    char const *fps_char = fps.c_str();
+    BeginDrawing();
+    p=GetMousePosition();
+    //little drag test fuck I don't know why it's so slow
+    // if ((GetMousePosition().x==p.x+radius || GetMousePosition().y==p.y+radius) && IsMouseButtonDown(MOUSE_BUTTON_LEFT)  ) {
+    //    little first test
+    //   p=GetMousePosition();
+    // }
+    DrawText(fps_char,0, 0, 30, RED );
+    ClearBackground(RAYWHITE);
+    DrawCircleV(p, radius, RED);
+    EndDrawing();
+
+
+  }
+  //pseudocodigo ajjajakjkas
+// if((posicionMouse.x==p.x+radius || posicionMouse.y=p+radius)) && isButtonDown(MOUSE_BUTTON_LEFT){
+// p=posicionMouse;
+// }
+  CloseWindow();
+
+}
 
 void tests() {
    const std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
