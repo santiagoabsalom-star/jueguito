@@ -38,19 +38,20 @@ bool CheckCollisionPointCircle(Vector2 point, Vector2 center, float radius) {
                                          // aca entra el (x,y) cos(tita)*r, sin(tita)*r 
     float x = cos(angle) * radius + center.x;
     float y = sin(angle) * radius + center.y;
+
     Vector2 pixel_current = {x, y};
+    float vertx3 = center.x;
+    float verty3 = y;
+    // vertice 3 del triangulo
+    // dibjuamos desde el centro hasta el punto vertx 
+    DrawPixel(vertx3, verty3, BLUE);
+    DrawPixel(x, y , RED);
+    DrawPixel(x, center.y, GREEN);
 
 
-
-    DrawLine(pixel_current.x, pixel_current.y, center.x, center.y, RED); 
   }
 
     // base * altura * 2
-
-
-    
-
-
   return true;
 
 }
@@ -73,6 +74,7 @@ void raylib() {
     //   is_drag = true;
     // }
 
+    radius += GetMouseWheelMove() * 3;
 
     if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
       is_drag = false;
