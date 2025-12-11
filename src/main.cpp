@@ -24,6 +24,7 @@ int main() {
 
   return 0;
 }
+
 bool CheckCollisionPointCircle(Vector2 point, Vector2 center, float radius) {
   // la vuelta completa
   float pi_rad = PI*2; // 360
@@ -35,31 +36,34 @@ bool CheckCollisionPointCircle(Vector2 point, Vector2 center, float radius) {
     float dist = i / SEGMENTS;
     // angle para cada segmento
     float angle = pi_rad * (dist); // i / segmentos -> esto hace que sea de 0 a 360 o lo que seria en numeros/float de 0 a 1
-                                         // aca entra el (x,y) cos(tita)*r, sin(tita)*r 
+                                   // aca entra el (x,y) cos(tita)*r, sin(tita)*r 
     float x = cos(angle) * radius + center.x;
     float y = sin(angle) * radius + center.y;
 
     Vector2 pixel_current = {x, y};
     float vertx3 = center.x;
     float verty3 = y;
-    // vertice 3 del triangulo
-    // dibjuamos desde el centro hasta el punto vertx 
-    DrawPixel(vertx3, verty3, BLUE);
-    DrawPixel(x, y , RED);
-    DrawPixel(x, center.y, GREEN);
+    float distance = sqrt(pow(center.x - point.x, 2) + pow(center.y - point.y, 2));
+
+    if(distance < radius){
+      return true;
+    }
+    else if(distance > radius){
+      return false;
+    }
 
 
+
+  // base * altura * 2
   }
-
-    // base * altura * 2
-  return true;
-
+  return false;
 }
 
 
 void raylib() {
 
 
+  Vector2 vel = {0, 0};
   SetConfigFlags(FLAG_MSAA_4X_HINT);
   //try on raylib jajaj;D
   Vector2 p={300,225};
@@ -70,10 +74,7 @@ void raylib() {
   bool is_drag = false;
   while (!WindowShouldClose())
   {
-    // if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && CheckCollisionPointCircle(GetMousePosition(), p, radius)){
-    //   is_drag = true;
-    // }
-
+    
     radius += GetMouseWheelMove() * 3;
 
     if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
@@ -87,24 +88,24 @@ void raylib() {
     BeginDrawing();
     //little drag test fuck I don't know why it's so slow
     //    little first test
+
+
+
     bool t = CheckCollisionPointCircle(
         GetMousePosition(),
         p,
         radius
-    );
+        );
 
-    if( IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+    if( t && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
       p=GetMousePosition();
     }
     DrawText(fps_char,0, 0, 30, RED );
     ClearBackground(RAYWHITE);
-    // DrawCircleV(p, radius, RED);
+    DrawCircleV(p, radius, RED);
     EndDrawing();
   }
-  //pseudocodigo ajjajakjkas
-  // if((posicionMouse.x==p.x+radius || posicionMouse.y=p+radius)) && isButtonDown(MOUSE_BUTTON_LEFT){
-  // p=posicionMouse;
-  // }
+
   CloseWindow();
 
 }
@@ -135,4 +136,3 @@ void tests() {
   const long time1 = std::chrono::duration_cast<std::chrono::seconds>(stop1 - start1).count();
   std::cout << "El tiempo es: "<< time1 <<" ms"<< '\n';
 }
-
