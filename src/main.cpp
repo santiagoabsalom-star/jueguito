@@ -38,7 +38,8 @@ struct Ship
                                           // float result = sqrtf((v.x*v.x) + (v.y*v.y)); que en realidad es esto que ya lo hicmos
 
       // normalizar
-      // position.y += go.y + speed * DT;
+      // si te fijas va indefinidamente hacia alla no hay un tope
+      position += velocity * DT;
     }
     void init(Vector2 spawn)
     {
