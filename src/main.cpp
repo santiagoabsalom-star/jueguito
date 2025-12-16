@@ -60,51 +60,33 @@ bool CheckCollisionPointCircle(Vector2 point, Vector2 center, float radius) {
 }
 
 
-void raylib() {
+void raylib()
+{
+    //try on raylib jajaj;D
+    Vector2 centerCircle = {300, 225};
+
+    float radius = 50;
+    InitWindow(WIDTH, HEIGHT, "Try on raylib");
+    SetTargetFPS(165);
+
+    while (!WindowShouldClose())
+    {
+        radius += GetMouseWheelMove() * 3;
+        std::string fps = std::to_string(GetFPS());
+        char const* fps_char = fps.c_str();
+        BeginDrawing();
+        DrawText(fps_char, 0, 0, 30, RED);
+        ClearBackground(GRAY);
 
 
-  Vector2 vel = {0, 0};
-  SetConfigFlags(FLAG_MSAA_4X_HINT);
-  //try on raylib jajaj;D
-  Vector2 p={300,225};
-  Vector2 v={100, 100};
-  float radius=50;
-  InitWindow(600, 450, "Try on raylib");
-  SetTargetFPS(165);
-  bool is_drag = false;
-  while (!WindowShouldClose())
-  {
-    
-    radius += GetMouseWheelMove() * 3;
+        DrawCircleV(centerCircle, radius, RED);
+        if (CheckCollisionPointCircle(centerCircle, GetMousePosition(), radius) && IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+        {
+            centerCircle = GetMousePosition();
+        }
 
-    if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
-      is_drag = false;
+        EndDrawing();
     }
-    if(is_drag){
-      p = GetMousePosition();
-    }
-    std::string fps = std::to_string( GetFPS());
-    char const *fps_char = fps.c_str();
-    BeginDrawing();
-    //little drag test fuck I don't know why it's so slow
-    //    little first test
-
-
-
-    bool t = CheckCollisionPointCircle(
-        GetMousePosition(),
-        p,
-        radius
-        );
-
-    if( t && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-      p=GetMousePosition();
-    }
-    DrawText(fps_char,0, 0, 30, RED );
-    ClearBackground(RAYWHITE);
-    DrawCircleV(p, radius, RED);
-    EndDrawing();
-  }
 
   CloseWindow();
 
